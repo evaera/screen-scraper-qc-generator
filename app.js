@@ -8,6 +8,11 @@
     return "!";
   };
 
+  function isNormalInteger(str) {
+    var n = ~~Number(str);
+    return String(n) === str && n >= 0;
+};
+
   app = new Vue({
     el: '#app',
     data: {
@@ -50,12 +55,32 @@
     },
     methods: {
       newIssue: function(section) {
+        var index, issue, ref, results;
         if (section.issues[section.issues.length - 1].issue !== "") {
-          return section.issues.push({
+          section.issues.push({
             pks: "",
             issue: ""
           });
         }
+        ref = section.issues;
+        results = [];
+        for (index in ref) {
+          issue = ref[index];
+          if (issue.issue === "^") {
+            if (section.issues[index - 1] != null) {
+              if (isNormalInteger(section.issues[index - 1].issue)) {
+                results.push(issue.issue = section.issues[index - 1].issue);
+              } else {
+                results.push(issue.issue = section.issues[index - 1].pks);
+              }
+            } else {
+              results.push(void 0);
+            }
+          } else {
+            results.push(void 0);
+          }
+        }
+        return results;
       },
       newSearch: function() {
         if (this.searches[this.searches.length - 1].criteria[0].k !== "") {

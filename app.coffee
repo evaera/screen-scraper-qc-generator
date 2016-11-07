@@ -12,6 +12,11 @@ sections = [
 
 window.onbeforeunload = -> "!"
 
+`function isNormalInteger(str) {
+    var n = ~~Number(str);
+    return String(n) === str && n >= 0;
+}`
+
 app = new Vue
 	el: '#app'
 	data: 
@@ -23,6 +28,14 @@ app = new Vue
 		newIssue: (section) ->
 			if section.issues[section.issues.length-1].issue isnt ""
 				section.issues.push { pks: "", issue: "" }
+			for index, issue of section.issues
+				if issue.issue is "^"
+					if section.issues[index-1]?
+						if isNormalInteger(section.issues[index-1].issue)
+							issue.issue = section.issues[index-1].issue
+						else
+							issue.issue = section.issues[index-1].pks
+
 		newSearch: ->
 			if @searches[@searches.length-1].criteria[0].k isnt ""
 				@searches.push {criteria:[{k:"", v:""}], missing:[{name: "", address: ""}]}
