@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>QC generator</title>
+	<link rel="stylesheet" href="/style.css">
+	<script src="/app.js"></script>
+</head>
+<body>
+	<div id="app">
+		<ul>
+			<li v-for="(section, index) in sections">
+				<div :class="{ muted: !section.enabled }">
+					<input type="checkbox" :id="'s-' + index" v-model="section.enabled" />
+					<label :for="'s-' + index">{{ section.name }}</label>
+
+					<div v-if="section.enabled" class="issues">
+						<div class="input-group" v-for="issue in section.issues" class="input-group">
+							<input type="text" placeholder="PK" size="2" v-model="issue.pks" />
+							<input type="text" placeholder="Issue description or pk of previous issue" size="40" v-model="issue.issue" @input="newIssue(section)" />
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+		<div class="input-group space">
+			<input type="number" v-model="numProviders" placeholder="total providers" />
+		</div>
+		<div class="input-group space">
+			<input type="checkbox" id="spot-check" v-model="spotCheck" />
+			<label for="spot-check">Spot check</label>
+		</div>
+		<ul v-if="spotCheck">
+			<li v-for="search in searches" style="margin-top: 20px;">
+				<h3>Search Criteria</h3>
+				<ul>
+					<li v-for="criteria in search.criteria" class="input-group">
+						<input type="text" v-model="criteria.k" placeholder="Key" @input="newSearch(search)"/>
+						<input type="text" v-model="criteria.v" placeholder="Value" @input="newCriteria(search)"/>
+					</li>
+				</ul>
+				<h3>Missing Providers</h3>
+				<ul>
+					<li v-for="missing in search.missing" class="input-group">
+						<input type="text" v-model="missing.name" placeholder="Name" @input="newMissingProvider(search)" />
+						<input type="text" v-model="missing.address" placeholder="Address" @input="newMissingProvider(search)" />
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		<textarea readonly>{{ output }}</textarea>
+	</div>
+</body>
+</html>
