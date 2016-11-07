@@ -10,6 +10,8 @@ sections = [
 	"random providers"
 ]
 
+window.onbeforeunload = -> "!"
+
 app = new Vue
 	el: '#app'
 	data: 
