@@ -4,6 +4,10 @@
 
   sections = ["previously reported issues", "missing group affiliations", "missing hospital affiliations", "missing languages", "missing networks", "missing plans", "missing offices", "missing specialties", "random providers"];
 
+  window.onbeforeunload = function() {
+    return "!";
+  };
+
   app = new Vue({
     el: '#app',
     data: {
