@@ -1,12 +1,12 @@
 sections = [
 	"previously reported issues"
-	"missing group affiliations"
-	"missing hospital affiliations"
-	"missing languages"
-	"missing networks"
-	"missing plans"
-	"missing offices"
-	"missing specialties"
+	"group affiliations"
+	"hospital affiliations"
+	"languages"
+	"networks"
+	"plans"
+	"offices"
+	"specialties"
 	"random providers"
 ]
 
