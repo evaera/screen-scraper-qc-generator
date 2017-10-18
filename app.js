@@ -170,7 +170,7 @@
             issue = ref1[i];
             if (issue.issue !== "" && (skipPks[issue.pks] == null)) {
               hasErrors = true;
-              issues += "- pk " + (getPks(issue)) + ": " + issue.issue + "\n\n";
+              issues += "-" + (issue.pks.length === 0 ? "" : "pk " + (getPks(issue)) + ":") + (" " + issue.issue + "\n\n");
             }
           }
           out += ("Checked " + section.name + ", ") + (issues.length > 0 ? "issues found:" : "no issues found.") + "\n\n";

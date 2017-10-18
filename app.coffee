@@ -80,7 +80,7 @@ window.app = new Vue
 				for i, issue of section.issues
 					if issue.issue isnt "" and not skipPks[issue.pks]?
 						hasErrors = true
-						issues += "- pk #{getPks(issue)}: #{issue.issue}\n\n"
+						issues += "-" + (if issue.pks.length is 0 then "" else "pk #{getPks(issue)}:") + " #{issue.issue}\n\n"
 						
 				out += "Checked #{section.name}, " + (if issues.length > 0 then "issues found:" else "no issues found.") + "\n\n"
 				out += issues

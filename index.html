@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>QC generator</title>
-	<link rel="stylesheet" href="/style.css?2">
+	<link rel="stylesheet" href="/style.css?3">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
 	<script src="/vue.min.js"></script>
 	<style>
@@ -22,7 +22,7 @@
 
 					<div v-if="section.enabled" class="issues">
 						<div class="input-group" v-for="issue in section.issues" class="input-group">
-							<input type="text" placeholder="PK" size="2" v-model="issue.pks" />
+							<input type="text" placeholder="PK" size="2" v-model="issue.pks" v-if="section.name != 'QA spreadsheet'" />
 							<input type="text" placeholder="Issue description or pk of previous issue" size="40" v-model="issue.issue" @input="newIssue(section)" />
 						</div>
 					</div>
@@ -60,6 +60,6 @@
 		<textarea id="output" readonly>{{ output }}</textarea>
 		<button class="copy-button" data-clipboard-target="#output" @click="copyButton">{{ copyButtonText }}</button>
 	</div>
-	<script src="/app.js?2"></script>
+	<script src="/app.js?3"></script>
 </body>
 </html>
