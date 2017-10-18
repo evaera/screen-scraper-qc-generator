@@ -1,2 +1,60 @@
-body{padding:20px;font-family:"Source Sans Pro", "Open Sans", verdana, sans-serif;font-weight:100}input,textarea{padding:5px 10px}.input-group{display:block;padding:5px 0}label{cursor:pointer}.issues{padding:20px}.muted{opacity:0.7}textarea{margin-top:100px;width:50%;height:400px}h1,h2,h3,h4,h5{font-weight:100}h3{margin-top:5px}.space{margin-top:20px}
+html, body {
+  height: 100%; }
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Source Sans Pro", "Open Sans", verdana, sans-serif;
+  font-weight: 100; }
+
+#app {
+  padding: 25px;
+  min-height: calc(100% - 50px); }
+
+#app.darkmode {
+  background: #222;
+  color: #fff; }
+  #app.darkmode input, #app.darkmode textarea {
+    background: #454545;
+    color: #fefefe;
+    border: 1px solid gray; }
+
+input, textarea {
+  padding: 5px 10px; }
+
+.input-group {
+  display: block;
+  padding: 5px 0; }
+
+label {
+  cursor: pointer; }
+
+.issues {
+  padding: 20px; }
+
+.muted {
+  opacity: 0.7; }
+
+textarea {
+  margin-top: 100px;
+  width: 50%;
+  height: 400px; }
+
+h1, h2, h3, h4, h5 {
+  font-weight: 100; }
+
+h3 {
+  margin-top: 5px; }
+
+.space {
+  margin-top: 20px; }
+
+#dark-switch {
+  position: absolute;
+  right: 20px; }
+  #dark-switch span {
+    cursor: pointer; }
+    #dark-switch span:hover {
+      opacity: 0.7; }
+
 /*# sourceMappingURL=style.css.map */

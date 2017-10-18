@@ -4,14 +4,20 @@
 	<title>QC generator</title>
 	<link rel="stylesheet" href="/style.css">
 	<script src="/vue.min.js"></script>
+	<style>
+		[v-cloak] { display: none; }
+	</style>
 </head>
 <body>
-	<div id="app">
+	<div id="app" v-cloak :class="{ darkmode }">
+		<div id="dark-switch" @click="switchDarkmode">
+			<span>{{ darkmode ? "Dark" : "Light" }}</span>
+		</div>
 		<ul>
 			<li v-for="(section, index) in sections">
 				<div :class="{ muted: !section.enabled }">
 					<input type="checkbox" :id="'s-' + index" v-model="section.enabled" />
-					<label :for="'s-' + index">{{ section.name }}</label>
+					<label :for="'s-' + index">{{ capitalize(section.name) }}</label>
 
 					<div v-if="section.enabled" class="issues">
 						<div class="input-group" v-for="issue in section.issues" class="input-group">

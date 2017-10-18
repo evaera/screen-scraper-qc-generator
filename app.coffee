@@ -1,5 +1,5 @@
 sections = [
-	"previously reported issues"
+	"QA spreadsheet"
 	"group affiliations"
 	"hospital affiliations"
 	"languages"
@@ -9,6 +9,8 @@ sections = [
 	"specialties"
 	"random providers"
 ]
+
+window.capitalize = (str) -> str.substring(0, 1).toUpperCase() + str.substring(1)
 
 window.onbeforeunload = -> "!"
 
@@ -23,6 +25,7 @@ app = new Vue
 		sections: ({ name: name, issues: [{ pks: "", issue: "" }], enabled: false } for name in sections)
 		numProviders: ""
 		spotCheck: false
+		darkmode: if localStorage.darkmode == '1' then true or false
 		searches: [{criteria:[{k:"", v:""}], missing:[{name: "", address: ""}]}]
 	methods:
 		newIssue: (section) ->
@@ -46,7 +49,9 @@ app = new Vue
 		newMissingProvider: (search) ->
 			if search.missing[search.missing.length-1].name isnt ""
 				search.missing.push {name: "", address: ""}
-			
+		switchDarkmode: ->
+			app.darkmode = !app.darkmode
+			localStorage.darkmode = if app.darkmode then '1' else '0'
 	computed:
 		output: ->
 			hasErrors = false
