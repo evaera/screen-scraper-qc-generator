@@ -76,3 +76,32 @@ h3 {
 		}
 	}
 }
+
+.copy-button {
+	vertical-align: 398px;
+	margin-left: 10px;
+}
+
+.custom-criteria-input {
+	margin-left: 40px;
+	width: 363px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.custom-checkbox {
+	margin-left: 10px;
+	font-size: 14px;
+
+	input, label {
+		vertical-align: middle;
+	}
+}
+
+hr {
+	width: 50%;
+	border: none;
+	border-top: 1px solid silver;
+	margin: 0;
+	margin-top: 25px;
+}

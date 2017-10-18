@@ -2,7 +2,8 @@
 <html>
 <head>
 	<title>QC generator</title>
-	<link rel="stylesheet" href="/style.css?1">
+	<link rel="stylesheet" href="/style.css?2">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
 	<script src="/vue.min.js"></script>
 	<style>
 		[v-cloak] { display: none; }
@@ -37,8 +38,9 @@
 		</div>
 		<ul v-if="spotCheck">
 			<li v-for="search in searches" style="margin-top: 20px;">
-				<h3>Search Criteria</h3>
-				<ul>
+				<h3>Search Criteria <small class="custom-checkbox"><input type="checkbox" v-model="search.custom" :id="search._id" @change="newSearch(search)" /><label :for="search._id">Custom</label></small></h3>
+				<input type="text" class="custom-criteria-input" v-model="search.customText" placeholder="Custom Search Criteria" v-if="search.custom" @input="newSearch(search)" />
+				<ul v-else>
 					<li v-for="criteria in search.criteria" class="input-group">
 						<input type="text" v-model="criteria.k" placeholder="Key" @input="newSearch(search)"/>
 						<input type="text" v-model="criteria.v" placeholder="Value" @input="newCriteria(search)"/>
@@ -51,11 +53,13 @@
 						<input type="text" v-model="missing.address" placeholder="Address" @input="newMissingProvider(search)" />
 					</li>
 				</ul>
+				<hr>
 			</li>
 		</ul>
 		
-		<textarea readonly>{{ output }}</textarea>
+		<textarea id="output" readonly>{{ output }}</textarea>
+		<button class="copy-button" data-clipboard-target="#output" @click="copyButton">{{ copyButtonText }}</button>
 	</div>
-	<script src="/app.js?1"></script>
+	<script src="/app.js?2"></script>
 </body>
 </html>
