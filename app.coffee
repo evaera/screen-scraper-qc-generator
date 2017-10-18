@@ -76,13 +76,15 @@ window.app = new Vue
 							pks.push issue.pks
 							skipPks[issue.pks] = true
 					pks.join ", "
-					
+				
+				numIssues = 0
 				for i, issue of section.issues
 					if issue.issue isnt "" and not skipPks[issue.pks]?
+						numIssues++
 						hasErrors = true
 						issues += "-" + (if issue.pks.length is 0 then "" else "pk #{getPks(issue)}:") + " #{issue.issue}\n\n"
-						
-				out += "Checked #{section.name}, " + (if issues.length > 0 then "issues found:" else "no issues found.") + "\n\n"
+				
+				out += "Checked #{section.name}, " + (if issues.length > 0 then "issue" + (if numIssues isnt 1 then "s" else "") + " found:" else "no issues found.") + "\n\n"
 				out += issues
 				
 			out += "#{@numProviders.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") or 0} providers found this run.\n\n"

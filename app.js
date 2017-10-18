@@ -141,7 +141,7 @@
     },
     computed: {
       output: function() {
-        var criteria, getPks, hasErrors, i, issue, issues, j, k, l, len, len1, len2, len3, m, missing, out, ref, ref1, ref2, ref3, ref4, search, section, skipPks;
+        var criteria, getPks, hasErrors, i, issue, issues, j, k, l, len, len1, len2, len3, m, missing, numIssues, out, ref, ref1, ref2, ref3, ref4, search, section, skipPks;
         hasErrors = false;
         out = "";
         ref = this.sections;
@@ -165,15 +165,17 @@
             }
             return pks.join(", ");
           };
+          numIssues = 0;
           ref1 = section.issues;
           for (i in ref1) {
             issue = ref1[i];
             if (issue.issue !== "" && (skipPks[issue.pks] == null)) {
+              numIssues++;
               hasErrors = true;
               issues += "-" + (issue.pks.length === 0 ? "" : "pk " + (getPks(issue)) + ":") + (" " + issue.issue + "\n\n");
             }
           }
-          out += ("Checked " + section.name + ", ") + (issues.length > 0 ? "issues found:" : "no issues found.") + "\n\n";
+          out += ("Checked " + section.name + ", ") + (issues.length > 0 ? "issue" + (numIssues !== 1 ? "s" : "") + " found:" : "no issues found.") + "\n\n";
           out += issues;
         }
         out += (this.numProviders.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") || 0) + " providers found this run.\n\n";
