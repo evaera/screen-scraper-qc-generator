@@ -42,7 +42,7 @@
 				<input type="text" class="custom-criteria-input" v-model="search.customText" placeholder="Custom Search Criteria" v-if="search.custom" @input="newSearch(search)" />
 				<ul v-else>
 					<li v-for="criteria in search.criteria" class="input-group">
-						<input type="text" v-model="criteria.k" placeholder="Key" @input="newSearch(search)"/>
+						<input type="text" v-model="criteria.k" placeholder="Field" @input="newSearch(search)"/>
 						<input type="text" v-model="criteria.v" placeholder="Value" @input="newCriteria(search)"/>
 					</li>
 				</ul>
