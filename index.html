@@ -2,9 +2,9 @@
 <html>
 <head>
 	<title>QC generator</title>
-	<link rel="stylesheet" href="/style.css?3">
+	<link rel="stylesheet" href="/style.css?4">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
-	<script src="/vue.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.min.js"></script>
 	<style>
 		[v-cloak] { display: none; }
 	</style>
@@ -22,7 +22,7 @@
 
 					<div v-if="section.enabled" class="issues">
 						<div class="input-group" v-for="issue in section.issues" class="input-group">
-							<input type="text" placeholder="PK" size="2" v-model="issue.pks" v-if="section.name != 'QA spreadsheet'" />
+							<input type="text" placeholder="PK" size="2" v-model.trim="issue.pks" v-if="section.name != 'QA spreadsheet'" />
 							<input type="text" placeholder="Issue description or pk of previous issue" size="40" v-model="issue.issue" @input="newIssue(section)" />
 						</div>
 					</div>
@@ -37,7 +37,7 @@
 			<label for="spot-check">Spot check</label>
 		</div>
 		<ul v-if="spotCheck">
-			<li v-for="search in searches" style="margin-top: 20px;">
+			<li v-for="(search, index1) in searches" style="margin-top: 20px;">
 				<h3>Search Criteria <small class="custom-checkbox"><input type="checkbox" v-model="search.custom" :id="search._id" @change="newSearch(search)" /><label :for="search._id">Custom</label></small></h3>
 				<input type="text" class="custom-criteria-input" v-model="search.customText" placeholder="Custom Search Criteria" v-if="search.custom" @input="newSearch(search)" />
 				<ul v-else>
@@ -48,9 +48,11 @@
 				</ul>
 				<h3>Missing Providers</h3>
 				<ul>
-					<li v-for="missing in search.missing" class="input-group">
+					<li v-for="(missing, index2) in search.missing" class="input-group">
 						<input type="text" v-model="missing.name" placeholder="Name" @input="newMissingProvider(search)" />
 						<input type="text" v-model="missing.address" placeholder="Address" @input="newMissingProvider(search)" />
+						<input type="checkbox" :id="`m-${index1}-${index2}`" v-model="missing.notFoundThisRun" />
+						<label :for="`m-${index1}-${index2}`">Not found this run</label>
 					</li>
 				</ul>
 				<hr>
@@ -60,6 +62,6 @@
 		<textarea id="output" readonly>{{ output }}</textarea>
 		<button class="copy-button" data-clipboard-target="#output" @click="copyButton">{{ copyButtonText }}</button>
 	</div>
-	<script src="/app.js?4"></script>
+	<script src="/app.js?5"></script>
 </body>
 </html>

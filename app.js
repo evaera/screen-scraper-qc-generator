@@ -56,13 +56,17 @@
           missing: [
             {
               name: "",
-              address: ""
+              address: "",
+              notFoundThisRun: false
             }
           ]
         }
       ]
     },
     methods: {
+      capitalize: function(str) {
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+      },
       newIssue: function(section) {
         var index, issue, ref, results;
         if (section.issues[section.issues.length - 1].issue !== "") {
@@ -124,7 +128,8 @@
         if (search.missing[search.missing.length - 1].name !== "") {
           return search.missing.push({
             name: "",
-            address: ""
+            address: "",
+            notFoundThisRun: false
           });
         }
       },
@@ -141,7 +146,7 @@
     },
     computed: {
       output: function() {
-        var criteria, getPks, hasErrors, i, issue, issues, j, k, l, len, len1, len2, len3, m, missing, numIssues, out, ref, ref1, ref2, ref3, ref4, search, section, skipPks;
+        var criteria, getPks, hasErrors, i, issue, issues, j, k, l, len, len1, len2, len3, m, missing, numIssues, out, ref, ref1, ref2, ref3, saidNotFound, search, searchMissing, section, skipPks;
         hasErrors = false;
         out = "";
         ref = this.sections;
@@ -195,7 +200,7 @@
               if (criteria.k === "") {
                 continue;
               }
-              out += criteria.k + ": " + criteria.v + "\n";
+              out += (criteria.k.trim()) + ": " + criteria.v + "\n";
             }
           }
           out += "\n";
@@ -204,11 +209,23 @@
           } else {
             hasErrors = true;
             out += "Missing providers:\n\n";
-            ref4 = search.missing;
-            for (m = 0, len3 = ref4.length; m < len3; m++) {
-              missing = ref4[m];
+            saidNotFound = false;
+            searchMissing = JSON.parse(JSON.stringify(search.missing));
+            searchMissing.sort(function(a, b) {
+              if (a.notFoundThisRun) {
+                return 1;
+              } else {
+                return -1;
+              }
+            });
+            for (m = 0, len3 = searchMissing.length; m < len3; m++) {
+              missing = searchMissing[m];
               if (missing.name === "") {
                 continue;
+              }
+              if (missing.notFoundThisRun && saidNotFound === false) {
+                out += "Not found this run:\n\n";
+                saidNotFound = true;
               }
               out += "Name: " + missing.name + "\nAddress: " + missing.address + "\n\n";
             }
