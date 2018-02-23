@@ -27,7 +27,7 @@ window.app = new Vue
 		spotCheck: false
 		copyButtonText: "Copy to Clipboard"
 		darkmode: if localStorage.darkmode == '1' then true or false
-		searches: [{_id: 0, custom: false, customText: "No search criteria.", criteria:[{k:"", v:""}], missing:[{name: "", address: "", notFoundThisRun: false}]}]
+		searches: [{_id: 0, custom: false, customText: "No search criteria.", criteria:[{k:"", v:""}], missing:[{name: "", address: "", notFoundThisRun: true}]}]
 	methods:
 		capitalize: (str) -> str.substring(0, 1).toUpperCase() + str.substring(1)
 		newIssue: (section) ->
@@ -50,7 +50,7 @@ window.app = new Vue
 		
 		newMissingProvider: (search) ->
 			if search.missing[search.missing.length-1].name isnt ""
-				search.missing.push {name: "", address: "", notFoundThisRun: false}
+				search.missing.push {name: "", address: "", notFoundThisRun: true}
 		switchDarkmode: ->
 			app.darkmode = !app.darkmode
 			localStorage.darkmode = if app.darkmode then '1' else '0'
@@ -105,8 +105,8 @@ window.app = new Vue
 					out += "No missing providers found.\n\n"
 				else
 					hasErrors = true
-					out += "Missing providers:\n\n"
 					saidNotFound = false
+					saidMissingProviders = false
 					searchMissing = JSON.parse(JSON.stringify(search.missing))
 					searchMissing.sort (a, b) -> if a.notFoundThisRun then 1 else -1
 					for missing in searchMissing
@@ -114,6 +114,9 @@ window.app = new Vue
 						if missing.notFoundThisRun and saidNotFound == false
 							out += "Not found this run:\n\n"
 							saidNotFound = true
+						else if missing.notFoundThisRun == false and saidMissingProviders == false
+							out += "Missing providers:\n\n"
+							saidMissingProviders = true
 						out += "Name: #{missing.name}\nAddress: #{missing.address}\n\n"
 				out += "\n"
 			

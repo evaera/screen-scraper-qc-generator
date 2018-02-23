@@ -57,7 +57,7 @@
             {
               name: "",
               address: "",
-              notFoundThisRun: false
+              notFoundThisRun: true
             }
           ]
         }
@@ -129,7 +129,7 @@
           return search.missing.push({
             name: "",
             address: "",
-            notFoundThisRun: false
+            notFoundThisRun: true
           });
         }
       },
@@ -146,7 +146,7 @@
     },
     computed: {
       output: function() {
-        var criteria, getPks, hasErrors, i, issue, issues, j, k, l, len, len1, len2, len3, m, missing, numIssues, out, ref, ref1, ref2, ref3, saidNotFound, search, searchMissing, section, skipPks;
+        var criteria, getPks, hasErrors, i, issue, issues, j, k, l, len, len1, len2, len3, m, missing, numIssues, out, ref, ref1, ref2, ref3, saidMissingProviders, saidNotFound, search, searchMissing, section, skipPks;
         hasErrors = false;
         out = "";
         ref = this.sections;
@@ -208,8 +208,8 @@
             out += "No missing providers found.\n\n";
           } else {
             hasErrors = true;
-            out += "Missing providers:\n\n";
             saidNotFound = false;
+            saidMissingProviders = false;
             searchMissing = JSON.parse(JSON.stringify(search.missing));
             searchMissing.sort(function(a, b) {
               if (a.notFoundThisRun) {
@@ -226,6 +226,9 @@
               if (missing.notFoundThisRun && saidNotFound === false) {
                 out += "Not found this run:\n\n";
                 saidNotFound = true;
+              } else if (missing.notFoundThisRun === false && saidMissingProviders === false) {
+                out += "Missing providers:\n\n";
+                saidMissingProviders = true;
               }
               out += "Name: " + missing.name + "\nAddress: " + missing.address + "\n\n";
             }
